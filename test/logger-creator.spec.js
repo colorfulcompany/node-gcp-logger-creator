@@ -15,7 +15,6 @@ class TestingCreator extends LoggerCreator {
   version () { return '1.0' }
 }
 
-
 describe('LoggerCrearor', () => {
   describe('need extends and override name and version', () => {
     describe('no extends', () => {

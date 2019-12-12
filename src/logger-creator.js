@@ -35,7 +35,7 @@ class LoggerCreator {
   version () {
     throw new ServiceVersionNotSpecified()
   }
-  
+
   /**
    * @return {object}
    */
