@@ -4,11 +4,18 @@
   "description": "Google Cloud Logging Client Creator",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_PATH=./src mocha -r intelli-espower-loader test/**/*.spec.js"
+    "test": "NODE_PATH=./src mocha -r intelli-espower-loader test/**/*.spec.js",
+    "lint": "eslint ."
   },
   "author": "Colorful Company,Inc.",
   "license": "BSD-2-Clause",
   "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "intelli-espower-loader": "^1.0.1",
     "mocha": "^6.2.2",
     "power-assert": "^1.6.1"
