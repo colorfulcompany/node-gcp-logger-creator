@@ -35,5 +35,5 @@ class CustomLoggerCreator extends LoggerCreator {
   }
 }
 
-module.exports = CustomLoggerCreator.create({ level: 'debuge' })
+module.exports = CustomLoggerCreator.create({ level: 'debug' })
 ```
