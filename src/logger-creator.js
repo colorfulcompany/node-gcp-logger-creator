@@ -44,7 +44,9 @@ class LoggerCreator {
 
     return {
       prepend (m) {
-        return '[' + moment().format().replace('T', ' ') + '] ' + m
+        const mes = (typeof m === 'object') ? JSON.stringify(m) : m
+
+        return '[' + moment().format().replace('T', ' ') + '] ' + mes
       },
       fatal (m) { console.error(this.prepend(m)) },
       error (m) { console.error(this.prepend(m)) },
