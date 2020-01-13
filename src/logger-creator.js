@@ -16,7 +16,9 @@ class LoggerCreator {
     const creator = new this()
 
     if (opts.env === 'production' || process.env.NODE_ENV === 'production') {
-      return creator.bunyanLogger(opts)
+      return creator.bunyanGoogleLogger(opts)
+    } else if (typeof opts.file !== 'undefined') {
+      return creator.bunyanFileLogger(opts)
     } else {
       return creator.verboseConsole()
     }
@@ -61,7 +63,22 @@ class LoggerCreator {
    * @param {object} opts
    * @return {object}
    */
-  bunyanLogger (opts) {
+  bunyanFileLogger (opts) {
+    const bunyan = require('bunyan')
+    return bunyan.createLogger({
+      name: this.name(),
+      streams: [{
+        path: opts.file,
+        level: this.level(opts.level)
+      }]
+    })
+  }
+
+  /**
+   * @param {object} opts
+   * @return {object}
+   */
+  bunyanGoogleLogger (opts) {
     const bunyan = require('bunyan')
     const { LoggingBunyan } = require('@google-cloud/logging-bunyan')
     loggingBunyan = new LoggingBunyan()

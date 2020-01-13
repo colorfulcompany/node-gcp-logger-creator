@@ -1,8 +1,11 @@
-/* global describe, it */
-
-const LoggerCreator = require('logger-creator')
+/* global describe, it, beforeEach, afterEach */
 
 const assert = require('power-assert')
+const path = require('path')
+const fs = require('fs')
+const sleep = require('sleep-promise')
+
+const LoggerCreator = require('logger-creator')
 
 class TestingCreatorWithoutOverrindingName extends LoggerCreator {
   name () { return 'example-service' }
@@ -50,6 +53,23 @@ describe('LoggerCrearor', () => {
       const info = TestingCreator.create({ level: 'info', env: 'production' })
 
       assert(debug._level !== info._level)
+    })
+  })
+
+  describe('file logger', () => {
+    const file = path.join(__dirname, '../logger.log')
+    let logger
+    beforeEach(() => {
+      logger = TestingCreator.create({ file })
+    })
+    afterEach(() => {
+      fs.unlinkSync(file)
+    })
+
+    it('file exists', async () => {
+      logger.info('text message')
+      await sleep(10)
+      assert(fs.readFileSync(file).toString().length > 0)
     })
   })
 })
