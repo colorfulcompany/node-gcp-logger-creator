@@ -1,3 +1,5 @@
+const bunyan = require('bunyan')
+
 var loggingBunyan
 
 class LoggerNameNotSpecified extends Error {
@@ -20,7 +22,7 @@ class LoggerCreator {
     } else if (typeof opts.file !== 'undefined') {
       return creator.bunyanFileLogger(opts)
     } else {
-      return creator.verboseConsole()
+      return creator.bunyanFlatLogger(opts)
     }
   }
 
@@ -38,25 +40,14 @@ class LoggerCreator {
     throw new ServiceVersionNotSpecified()
   }
 
-  /**
-   * @return {object}
-   */
-  verboseConsole () {
-    const moment = require('moment')
-
-    return {
-      prepend (m) {
-        const mes = (typeof m === 'object') ? JSON.stringify(m) : m
-
-        return '[' + moment().format().replace('T', ' ') + '] ' + mes
-      },
-      fatal (m) { console.error(this.prepend(m)) },
-      error (m) { console.error(this.prepend(m)) },
-      warn (m) { console.error(this.prepend(m)) },
-      info (m) { console.error(this.prepend(m)) },
-      debug (m) { console.error(this.prepend(m)) },
-      trace (m) { console.error(this.prepend(m)) }
-    }
+  bunyanFlatLogger (opts) {
+    const { FunBunyan } = require('fun-bunyan')
+    return new FunBunyan({
+      streams: [{
+        level: this.level(opts.level),
+        stream: process.stdout
+      }]
+    })
   }
 
   /**
@@ -64,7 +55,6 @@ class LoggerCreator {
    * @return {object}
    */
   bunyanFileLogger (opts) {
-    const bunyan = require('bunyan')
     return bunyan.createLogger({
       name: this.name(),
       streams: [{
@@ -79,7 +69,6 @@ class LoggerCreator {
    * @return {object}
    */
   bunyanGoogleLogger (opts) {
-    const bunyan = require('bunyan')
     const { LoggingBunyan } = require('@google-cloud/logging-bunyan')
     loggingBunyan = new LoggingBunyan()
 
@@ -87,7 +76,7 @@ class LoggerCreator {
     return bunyan.createLogger({
       name: this.name(),
       level,
-      streams: this.streams(level),
+      streams: [loggingBunyan.stream(level)],
       serviceContext: this.serviceContext()
     })
   }
@@ -103,16 +92,6 @@ class LoggerCreator {
     } else {
       return 'info'
     }
-  }
-
-  /**
-   * @param {string} level
-   * @return {Array}
-   */
-  streams (level) {
-    return (typeof loggingBunyan !== 'undefined')
-      ? [loggingBunyan.stream(level)]
-      : [{ stream: process.stdout, level }]
   }
 
   /**

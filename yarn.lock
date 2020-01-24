@@ -1196,6 +1196,13 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
+fun-bunyan@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/fun-bunyan/-/fun-bunyan-1.0.7.tgz#aa8d672593efff9a4134730af6fb1d5cbd2ff6ec"
+  integrity sha512-nbPbERyyN+l6fcV9l8/vTr/GeRXoAZItg9YExg/1gmMtn0qN/8YoyZae3KAtP7s5TVpVW4OpFAzNH3ApT3y7DQ==
+  dependencies:
+    bunyan "^1.8.12"
+
 function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
