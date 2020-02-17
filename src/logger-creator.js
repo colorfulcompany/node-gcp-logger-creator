@@ -43,6 +43,7 @@ class LoggerCreator {
   bunyanFlatLogger (opts) {
     const { FunBunyan } = require('fun-bunyan')
     return new FunBunyan({
+      level: this.level(opts.level),
       streams: [{
         level: this.level(opts.level),
         stream: process.stdout
