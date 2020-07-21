@@ -1,6 +1,6 @@
 {
   "name": "gcp-logger-creator",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Google Cloud Logging Client Creator (works fine also for development environment)",
   "main": "index.js",
   "scripts": {
